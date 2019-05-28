@@ -7,6 +7,3 @@ instructions i.e mnemonics and corresponding opcodes.
 With this dictionary, we match each line in the ByteCode.txt file to our mnemonic keys. If there's a mnemonic word match,
 the mnemonic's key's value (which is the opcode) is added to the file 'Opcode.txt' which will eventually have all the opcodes
 used within 'ByteCode.txt'.
-
-This work has been contributed to by Anthony Mendonca (@tmendonca28). 
-
