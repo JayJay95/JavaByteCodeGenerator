@@ -1,4 +1,4 @@
-# JavaByteCodeGenerator
+# JavaByteCodeGenerator for NIST Juliet SARD testsuite
 
 This program takes class files from the NIST Juliet SARD testsuite and compiles them into bytecode per class files. 
 
