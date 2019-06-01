@@ -38,15 +38,16 @@ def create_clean_opcode_files():
   for file_pathname in clean_files:
     (dirname, filename) = os.path.split(file_pathname) # split full pathname into directory name and filename(has .class)
     (shortname, extension) = os.path.splitext(filename)
+    opcode_file = clean_opcode_folder + '/' + shortname + extension
     read_bytecode_file = open(file_pathname, "r")
     write_opcode_file = open(opcode_file, "w")
     for line in read_bytecode_file:
       for mnemonic in mnemonics:
-        if re.search(r'\b' + mnemonic + r'\b', line):  # match exact mnemonics
-            opcode_file = clean_opcode_folder + '/' + shortname + extension
-            write_opcode_file.write(instruction_dict.get(mnemonic, "none") + "\n")
+        if re.search(r'\b' + mnemonic + r'\b', line):  # match exact mnemonics     
+          write_opcode_file.write(instruction_dict.get(mnemonic, "none") + "\n")
     write_opcode_file.close()
-  read_bytecode_file.close()  
+  read_bytecode_file.close()
+    
 
 def create_vuln_opcode_files():
   vuln_files = []
@@ -54,15 +55,16 @@ def create_vuln_opcode_files():
   for file_pathname in vuln_files:
     (dirname, filename) = os.path.split(file_pathname) # split full pathname into directory name and filename(has .class)
     (shortname, extension) = os.path.splitext(filename)
+    opcode_file = vuln_opcode_folder + '/' + shortname + extension
     read_bytecode_file = open(file_pathname, "r")
     write_opcode_file = open(opcode_file, "w")
     for line in read_bytecode_file:
       for mnemonic in mnemonics:
-        if re.search(r'\b' + mnemonic + r'\b', line):  # match exact mnemonics
-            opcode_file = vuln_opcode_folder + '/' + shortname + extension
-            write_opcode_file.write(instruction_dict.get(mnemonic, "none") + "\n")
+        if re.search(r'\b' + mnemonic + r'\b', line):  # match exact mnemonics            
+          write_opcode_file.write(instruction_dict.get(mnemonic, "none") + "\n")
     write_opcode_file.close()
   read_bytecode_file.close()
+
 
 instruction_dict = create_dictionary()
 mnemonics = instruction_dict.keys()
