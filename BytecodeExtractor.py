@@ -35,23 +35,23 @@ for file_pathname in files:
    full_class_bytecode_file = full_class_bytecode_folder + '/' + shortname + '.txt'
    if fnmatch.fnmatch(file_pathname, "*"+good_string+"*"): # good class_based flaw test cases       
        with open(full_class_bytecode_file, "w") as fa:
-        call(["javap", "-c", file_pathname], stdout= fa, universal_newlines=True) # convert all good class-based flaw class files to bytecode
+        call(["javap", "-c", "-private", file_pathname], stdout= fa, universal_newlines=True) # convert all good class-based flaw class files to bytecode
        fa.close()
        clean_filename = clean_folder + '/' + shortname + '_clean' + '.txt'
        with open(clean_filename, "w") as fb: # write bytecode to CWE_clean_txt file 
-           call(["javap", "-c", file_pathname], stdout= fb, universal_newlines=True) # convert all good class-based flaw class files to bytecode
+           call(["javap", "-c", "-private", file_pathname], stdout= fb, universal_newlines=True) # convert all good class-based flaw class files to bytecode
        fb.close()
    elif fnmatch.fnmatch(file_pathname, "*"+bad_string+"*"): # bad class_based flaw test cases
        with open(full_class_bytecode_file, "w") as fc:
-        call(["javap", "-c", file_pathname], stdout= fc, universal_newlines=True) # convert all bad class-based flaw class files to bytecode
+        call(["javap", "-c", "-private", file_pathname], stdout= fc, universal_newlines=True) # convert all bad class-based flaw class files to bytecode
        fc.close()
        vuln_filename = vuln_folder + '/' + shortname + '_vuln' + '.txt'
        with open(vuln_filename, "w") as fd: # write bytecode to CWE_vuln_txt file 
-           call(["javap", "-c", file_pathname], stdout= fd, universal_newlines=True) # convert all bad class-based flaw class files to bytecode
+           call(["javap", "-c", "-private", file_pathname], stdout= fd, universal_newlines=True) # convert all bad class-based flaw class files to bytecode
        fd.close()
    else:
        with open(full_class_bytecode_file, "w") as fe:
-        call(["javap", "-c", file_pathname], stdout= fe, universal_newlines=True) # convert all other good/bad non-class based flaw class files to bytecode files individually
+        call(["javap", "-c", "-private", file_pathname], stdout= fe, universal_newlines=True) # convert all other good/bad non-class based flaw class files to bytecode files individually
        fe.close()
        file = open(full_class_bytecode_file, "r")
        file_to_string = file.read()
