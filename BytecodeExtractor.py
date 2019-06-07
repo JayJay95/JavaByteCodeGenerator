@@ -91,108 +91,59 @@ def match_methods():
                 bad_methods_by_class_file =  vuln_folder + '/' + shortname + '_vuln' + '.txt'
                 
                 # Finding good primary methods, secondary good methods - good1, goodG2B, goodB2G
-                if re.finditer(r'((public|private)(.*)(\bgood(\d*|G2B\d*|B2G\d*)\b)(.*)(\n*)(.+\n)+(return)*?$)', file_to_string, re.MULTILINE):
-                    result_good = re.finditer(r'((public|private)(.*)(\bgood(\d*|G2B\d*|B2G\d*)\b)(.*)(\n*)(.+\n)+(return)*?$)', file_to_string, re.MULTILINE)           
+                if re.search(r'((public|private)(.*)(\bgood(\d*|G2B\d*|B2G\d*)\b)(\n*)[\s\S]+?(return)$)', file_to_string, re.MULTILINE):
+                    result_good = re.finditer(r'((public|private)(.*)(\bgood(\d*|G2B\d*|B2G\d*)\b)(\n*)[\s\S]+?(return)$)', file_to_string, re.MULTILINE)           
                     with open(good_methods_by_class_file, "a") as f1:
                         for good_method in result_good:                 
-                            f1.write(good_method.group())
-                    f1.close()
+                            f1.write(good_method.group() + '\n')
 
                 # find bad primary methods      
-                if re.search(r'((public|private)(.*)(\bbad\b)(.*)(\n*)(.+\n)+(return)*?$)', file_to_string, re.MULTILINE):
-                    result_bad = re.search(r'((public|private)(.*)(\bbad\b)(.*)(\n*)(.+\n)+(return)*?$)', file_to_string, re.MULTILINE)
+                if re.search(r'((public|private)(.*)(\bbad\b)(\n*)[\s\S]+?(return)$)', file_to_string, re.MULTILINE):
+                    result_bad = re.search(r'((public|private)(.*)(\bbad\b)(\n*)[\s\S]+?(return)$)', file_to_string, re.MULTILINE)
                     with open(bad_methods_by_class_file, "a") as f2:
-                        f2.write(result_bad.group())
-                    f2.close()
-
-                #    if re.search(r'((public|private)(.*)(\bgood(\d+|G2B\d*)\b)(.*)(\n*)(.+\n)+(return)*?$)', file_to_string, re.MULTILINE):  
-                #        result_secondary_good_G2B = re.search(r'((public|private)(.*)(\bgood(\d+|G2B\d*)\b)(.*)(\n*)(.+\n)+(return)*?$)', file_to_string, re.MULTILINE)      
-                #        with open(good_methods_by_class_file, "a") as f3:
-                #            f3.write(result_secondary_good_G2B.group())
-                #            f3.close()
-
-                #    if re.search(r'((public|private)(.*)(\bgood(\d+|B2G\d*)\b)(.*)(\n*)(.+\n)+(return)*?$)', file_to_string, re.MULTILINE):
-                #        result_secondary_good_B2G = re.search(r'((public|private)(.*)(\bgood(\d+|B2G\d*)\b)(.*)(\n*)(.+\n)+(return)*?$)', file_to_string, re.MULTILINE)      
-                #        with open(good_methods_by_class_file, "a") as f4:
-                #            f4.write(result_secondary_good_B2G.group())
-                #            f4.close()
+                        f2.write(result_bad.group() + '\n')
 
                 # find helperBad methods
-                if re.search(r'((public|private)(.*)(\bhelperBad\b)(.*)(\n*)(.+\n)+(return)*?$)', file_to_string, re.MULTILINE): 
-                    result_helper_bad = re.search(r'((public|private)(.*)(\bhelperBad\b)(.*)(\n*)(.+\n)+(return)*?$)', file_to_string, re.MULTILINE)      
+                if re.search(r'((public|private)(.*)(\bhelperBad\b)(\n*)[\s\S]+?(return)$)', file_to_string, re.MULTILINE): 
+                    result_helper_bad = re.search(r'((public|private)(.*)(\bhelperBad\b)(\n*)[\s\S]+?(return)$)', file_to_string, re.MULTILINE)      
                     with open(bad_methods_by_class_file, "a") as f3:
-                        f3.write(result_helper_bad.group())
-                    f3.close()
+                        f3.write(result_helper_bad.group() + '\n')
                 
                 # find helperGood, helperGood1, helperGoodG2B, helperGoodB2G, helperGoodG2B1, helperGoodB2G1
-                if re.finditer(r'((public|private)(.*)(\bhelperGood(G2B|B2G)?\d*\b)(.*)(\n*)(.+\n)+(return)*?$)', file_to_string, re.MULTILINE):
-                    result_helper_good = re.finditer(r'((public|private)(.*)(\bhelperGood(G2B)?\d*\b)(.*)(\n*)(.+\n)+(return)*?$)', file_to_string, re.MULTILINE)       
+                if re.search(r'((public|private)(.*)(\bhelperGood(G2B|B2G)?\d*\b)(\n*)[\s\S]+?(return)$)', file_to_string, re.MULTILINE):
+                    result_helper_good = re.finditer(r'((public|private)(.*)(\bhelperGood(G2B)?\d*\b)(\n*)[\s\S]+?(return)$)', file_to_string, re.MULTILINE)       
                     with open(good_methods_by_class_file, "a") as f4:
                         for helper_good_method in result_helper_good:
-                            f4.write(helper_good_method.group())
-                    f4.close()
-
-                #    if re.search(r'((public|private)(.*)(\bhelperGood(B2G)?\d*\b)(.*)(\n*)(.+\n)+(return)*?$)', file_to_string, re.MULTILINE):
-                #        result_helper_good_B2G = re.search(r'((public|private)(.*)(\bhelperGood(B2G)?\d*\b)(.*)(\n*)(.+\n)+(return)*?$)', file_to_string, re.MULTILINE)       
-                #        with open(good_methods_by_class_file, "a") as f7:
-                #            f7.write(result_helper_good_B2G.group())
-                #            f7.close()
-                
+                            f4.write(helper_good_method.group() + '\n')
+               
                 # find badSource, badSink
-                if re.finditer(r'((public|private)(.*)(\bbadSource|badSink\b)(.*)(\n*)(.+\n)+(return)*?$)', file_to_string, re.MULTILINE):
-                    result_bad_source_sink = re.finditer(r'((public|private)(.*)(\bbadSource|badSink\b)(.*)(\n*)(.+\n)+(return)*?$)', file_to_string, re.MULTILINE)      
+                if re.search(r'((public|private)(.*)(\bbadSource|badSink\b)(\n*)[\s\S]+?(return)$)', file_to_string, re.MULTILINE):
+                    result_bad_source_sink = re.finditer(r'((public|private)(.*)(\bbadSource|badSink\b)(\n*)[\s\S]+?(return)$)', file_to_string, re.MULTILINE)      
                     with open(bad_methods_by_class_file, "a") as f5:
                         for bad_source_sink_method in result_bad_source_sink:
-                            f5.write(bad_source_sink_method.group())
-                    f5.close()
-
-                #    if re.search(r'((public|private)(.*)(\bbadSink\b)(.*)(\n*)(.+\n)+(return)*?$)', file_to_string, re.MULTILINE):
-                #        result_bad_sink = re.search(r'((public|private)(.*)(\bbadSink\b)(.*)(\n*)(.+\n)+(return)*?$)', file_to_string, re.MULTILINE)      
-                #        with open(bad_methods_by_class_file, "a") as f9:
-                #            f9.write(result_bad_sink.group())
-                #            f9.close()
+                            f5.write(bad_source_sink_method.group() + '\n')
 
                 # find good G2B/B2G source and sink methods
-                if re.finditer(r'(((public|private)(.*)(\b(good)(G2B|B2G)\d*(Source|Sink)\b))(.*)(\n*)(.+\n)+(return)*?$)', file_to_string, re.MULTILINE):
-                    result_good_source_sink_G2B_B2G = re.finditer(r'(((public|private)(.*)(\b(good)(G2B|B2G)\d*(Source|Sink)\b))(.*)(\n*)(.+\n)+(return)*?$)', file_to_string, re.MULTILINE)       
+                if re.search(r'(((public|private)(.*)(\b(good)(G2B|B2G)\d*(Source|Sink)\b))(\n*)[\s\S]+?(return)$)', file_to_string, re.MULTILINE):
+                    result_good_source_sink_G2B_B2G = re.finditer(r'(((public|private)(.*)(\b(good)(G2B|B2G)\d*(Source|Sink)\b))(\n*)[\s\S]+?(return)$)', file_to_string, re.MULTILINE)       
                     with open(good_methods_by_class_file, "a") as f6:
                         for method in result_good_source_sink_G2B_B2G:
-                            f6.write(method.group())
-                    f6.close()
+                            f6.write(method.group() + '\n')
                     
                 # find helper Good extra methods
-                if re.finditer(r'((public|private)(.*)(\b(helper(.+))(Good\d*)\b)(.*)(\n*)(.+\n)+(return)*?$)', file_to_string, re.MULTILINE): 
-                    result_helper_extra_good = re.finditer(r'((public|private)(.*)(\b(helper(.+))(Good\d*)\b)(.*)(\n*)(.+\n)+(return)*?$)', file_to_string, re.MULTILINE)      
+                if re.search(r'((public|private)(.*)(\b(helper(.+))(Good\d*)\b)(\n*)[\s\S]+?(return)$)', file_to_string, re.MULTILINE): 
+                    result_helper_extra_good = re.finditer(r'((public|private)(.*)(\b(helper(.+))(Good\d*)\b)(\n*)[\s\S]+?(return)$)', file_to_string, re.MULTILINE)      
                     with open(good_methods_by_class_file, "a") as f7:
                         for helper_good_extra_method in result_helper_extra_good:
-                            f7.write(helper_good_extra_method.group())
-                    f7.close()
+                            f7.write(helper_good_extra_method.group() + '\n')
                 
                 # find helper Bad extra methods
-                if re.finditer(r'((public|private)(.*)(\b(helper(.+))(Bad\d*)\b)(.*)(\n*)(.+\n)+(return)*?$)', file_to_string, re.MULTILINE):
-                    result_helper_extra_bad = re.finditer(r'((public|private)(.*)(\b(helper(.+))(Bad\d*)\b)(.*)(\n*)(.+\n)+(return)*?$)', file_to_string, re.MULTILINE)       
+                if re.search(r'((public|private)(.*)(\b(helper(.+))(Bad\d*)\b)(\n*)[\s\S]+?(return)$)', file_to_string, re.MULTILINE):
+                    result_helper_extra_bad = re.finditer(r'((public|private)(.*)(\b(helper(.+))(Bad\d*)\b)(\n*)[\s\S]+?(return)$)', file_to_string, re.MULTILINE)       
                     with open(bad_methods_by_class_file, "a") as f8:
                         for helper_bad_extra_method in result_helper_extra_bad:
-                            f8.write(helper_bad_extra_method.group())
-                    f8.close()
+                            f8.write(helper_bad_extra_method.group() + '\n')
 
-                #    if re.search(r'((public|private)(.*)(\bgood(B2G\d*)?Source\b)(.*)(\n*)(.+\n)+(return)*?$)', file_to_string, re.MULTILINE):
-                #        result_good_source_B2G = re.search(r'((public|private)(.*)(\bgood(B2G\d*)?Source\b)(.*)(\n*)(.+\n)+(return)*?$)', file_to_string, re.MULTILINE)       
-                #        with open(good_methods_by_class_file, "a") as f11:
-                #            f11.write(result_good_source_B2G.group())
-                #            f11.close()
-
-                #    if re.search(r'((public|private)(.*)(\bgood(G2B\d*)?Sink\b)(.*)(\n*)(.+\n)+(return)*?$)', file_to_string, re.MULTILINE):
-                #       result_good_sink_G2B = re.search(r'((public|private)(.*)(\bgood(G2B\d*)?Sink\b)(.*)(\n*)(.+\n)+(return)*?$)', file_to_string, re.MULTILINE)       
-                #       with open(good_methods_by_class_file, "a") as f12:
-                #           f12.write(result_good_sink_G2B.group())
-                #           f12.close()
-                
-                #    if re.search(r'((public|private)(.*)(\bgood(B2G\d*)?Sink\b)(.*)(\n*)(.+\n)+(return)*?$)', file_to_string, re.MULTILINE):
-                #        result_good_sink_B2G = re.search(r'((public|private)(.*)(\bgood(B2G\d*)?Sink\b)(.*)(\n*)(.+\n)+(return)*?$)', file_to_string, re.MULTILINE)       
-                #        with open(good_methods_by_class_file, "a") as f13:
-                #            f13.write(result_good_sink_B2G.group())
-                #            f13.close()
                 file.close()
 
 
