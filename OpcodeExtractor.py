@@ -2,6 +2,7 @@ from pandas import *
 import xlrd
 import re
 import os
+import pdb
 
 clean_folder = 'D:/After4thYear/MSc Applied Cyber Security/Research Project/tests/JavaByteCodeGenerator/Dataset/Clean'
 vuln_folder = 'D:/After4thYear/MSc Applied Cyber Security/Research Project/tests/JavaByteCodeGenerator/Dataset/Vuln'
@@ -12,9 +13,42 @@ def create_dictionary():
     d = {}
     wb = xlrd.open_workbook('D:/After4thYear/MSc Applied Cyber Security/Research Project/tests/JavaByteCodeGenerator/Java_Bytecode_Instructions.xlsx')
     sh = wb.sheet_by_index(0) 
-    for i in range(206):
-        cell_value_class = str(sh.cell(i,1).value).replace(" ", "") # values - opcodes in binary (binary vectors)
+    for i in range(205):
+        cell_value_class = str(sh.cell(i,1).value).strip('.0') # values - opcodes in hex (binary vectors)
         cell_value_id = sh.cell(i,0).value # keys - mnemonics
+        if cell_value_class == '0':
+          cell_value_class = '00'
+        elif cell_value_class == '1':
+          cell_value_class = '01'
+        elif cell_value_class == '2':
+          cell_value_class = '02'
+        elif cell_value_class == '3':
+          cell_value_class = '03'
+        elif cell_value_class == '4':
+          cell_value_class = '04'  
+        elif cell_value_class == '5':
+          cell_value_class = '05'
+        elif cell_value_class == '6':
+          cell_value_class = '06'
+        elif cell_value_class == '7':
+          cell_value_class = '07'
+        elif cell_value_class == '8':
+          cell_value_class = '08'
+        elif cell_value_class == '9':
+          cell_value_class = '09'
+        elif cell_value_class == 'a':
+          cell_value_class = '0a'
+        elif cell_value_class == 'b':
+          cell_value_class = '0b'
+        elif cell_value_class == 'c':
+          cell_value_class = '0c'
+        elif cell_value_class == 'd':
+          cell_value_class = '0d'
+        elif cell_value_class == 'e':
+          cell_value_class = '0e'  
+        elif cell_value_class == 'f':
+          cell_value_class = '0f'
+        
         d[cell_value_id] = cell_value_class
     return d
 
